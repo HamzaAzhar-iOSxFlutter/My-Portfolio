@@ -218,11 +218,10 @@
                       class="contact-form contact-form-area wow fadeInUp delay-0-4s"
                     >
                       <form
+                        onsubmit="logFormValues(event)"
                         id="contactForm"
                         class="contactForm"
                         name="contactForm"
-                        action="assets/php/form-process.php"
-                        method="post"
                       >
                         <div class="row">
                           <div class="col-md-6">
@@ -304,8 +303,8 @@
                   <div class="col-lg-12 text-center">
                     <div class="copyright-text">
                       <p>
-                        &copy;Copyright <a href="index.html">Hamza Azhar</a> All Rights
-                        Reserved.
+                        &copy;Copyright <a href="index.html">Hamza Azhar</a> All
+                        Rights Reserved.
                       </p>
                     </div>
                   </div>
@@ -330,6 +329,49 @@
       </svg>
     </div>
     <!-- / END SCROOL UP DESIGN AREA -->
+
+    <!-- EMAIL JS -->
+    <script
+      type="text/javascript"
+      src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"
+    ></script>
+    <script type="text/javascript">
+      emailjs.init({
+        publicKey: "FLiUIxfdl7ZIyck0S",
+      });
+      console.log(emailjs); // This will log the emailjs object to the console
+      function logFormValues(event) {
+        event.preventDefault(); // Prevents the form from refreshing the page
+
+        // Get form values
+        const name = document.getElementById("name").value;
+        const email = document.getElementById("email").value;
+        const message = document.getElementById("message").value;
+
+        // Define parameters for EmailJS, matching template keys
+        const templateParams = {
+          to_name: "Hamza Azhar", // Replace with actual recipient name if needed
+          from_name: name,
+          message: message,
+          from_email: email,
+        };
+
+        // Send the email using EmailJS
+        emailjs
+          .send("service_t12kj18", "template_qv0u8pd", templateParams)
+          .then(
+            function (response) {
+              console.log("SUCCESS!", response.status, response.text);
+              alert("Your message has been sent!");
+            },
+            function (error) {
+              console.log("FAILED...", error);
+              alert("Something went wrong, please try again!");
+            }
+          );
+      }
+    </script>
+
     <!-- JQUERY JS -->
     <script src="assets/js/jquery-3.6.0.min.js"></script>
     <!-- BOOTSTRAP JS-->
